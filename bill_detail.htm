@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>Untitled Document</title>
+<script src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<script type="application/javascript">
+$(function(){
+  
+//alert(readCookie('uid'));
+   var orderidval=readCookie('orderid'); 
+  // alert(orderidval);
+  var flickerAPI = "http://50.56.237.229/wang/phpfiles/bill.php?jsoncallback=?&oid="+orderidval;
+  $.getJSON( flickerAPI, {
+  	
+    format: "json"
+  })
+  .done(function( data ) {
+  
+  //alert('dfg');
+    $.each( data.items, function( i, itemk ) {
+  //alert(itemk.description);
+	 //alert(i);
+	$('#item').append(itemk.description);
+    });
+  });
+  
+});
+
+
+</script>
+<script>
+function confirm1()
+{
+var r;
+r=confirm("Are You sure you would like to submit this sale for credit card payment");
+if(r==true)
+{
+window.location.href='checkout_method.htm';
+}
+else
+{
+return false;
+}
+
+}
+</script>
+<script>
+function remove_category(item_id)
+{
+ 
+ 
+  var answer = confirm("Are you sure?");
+if (answer) 
+       {
+ var orderid=readCookie('orderid');  
+ //alert(item_id);
+// alert(orderid);
+ 
+  var flickerAPI = "http://50.56.237.229/wang/phpfiles/remove_order.php?jsoncallback=?&item_id="+item_id+"&orderid="+orderid;
+  $.getJSON( flickerAPI, {
+  	
+    format: "json"
+  })
+  .done(function( data ) {
+  alert(data.items);
+	if(data.items=='1')
+	{
+	$('#'+item_id).remove();
+	}
+    });
+  
+
+ 
+ }
+ 
+else
+     {
+       }
+ }
+
+</script>
+
+<link href="style.css"rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="src/iscroll.js"></script>
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+
+<script type="text/javascript">
+
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper', {
+		useTransform: false,
+		onBeforeScrollStart: function (e) {
+			var target = e.target;
+			while (target.nodeType != 1) target = target.parentNode;
+
+			if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA')
+				e.preventDefault();
+		}
+	});
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', loaded, false);
+
+</script>
+
+<script>
+$(document).ready(function() {
+ 
+ var name="Welcome    "+readCookie('name');
+ 
+ $('#welcome').html(name);
+
+});
+</script> 
+
+<style type="text/css" media="all">
+body,ul,li {
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+body {
+	font-size:12px;
+	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;
+	font-family:helvetica;
+/*	padding-bottom:44px;	/*	This prevents the scroller to lock if the user swipes down outside of the screen.
+							 	NOT needed if in home screen mode and on Android. */
+}
+
+#header {
+	width:100%;
+	height:auto;
+	min-height:50px;
+	line-height:45px;
+	 background:url(images/topbar.jpg) ;
+	 box-shadow: inset 0px 15px 30px 0px rgba(255,255,255,0.1);
+	  text-align:center;
+	    font-family: 'OpenSansCondensedLight';
+	padding-top:2%;
+	color:#ffffff;
+	font-size:36px;
+	font-weight:bold;
+	
+}
+
+#header a {
+	color:#f3f3f3;
+	text-decoration:none;
+	font-weight:bold;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+}
+
+#footer {
+	width:100%;
+	height:65px;
+	position:absolute; z-index:2;
+	color:#ffffff;
+bottom:0;
+padding:0;
+	 background:url(images/topbar.jpg) ;
+	 box-shadow: inset 0px 15px 30px 0px rgba(255,255,255,0.1);
+}
+
+#footer li {
+	display:block;
+	float:left;
+}
+
+#footer li {
+	width:50%;
+	text-align:center;
+}
+
+#footer a.remove {
+	border-right:1px solid #333;
+}
+
+#footer a.add {
+	border-left:1px solid #6a6a6a;
+}
+
+#footer a {
+	display:block;
+	text-decoration:none;
+	font-size:12px;
+	color:#ffffff;
+	line-height:24px;
+	text-shadow:0 -1px 0 #000;
+}
+
+#footer span {
+	display:block;
+	font-size:30px;
+	font-weight:bold;
+}
+
+#wrapper {
+			/* Of course you need to specify the object height */
+top:60px; bottom:48px; 
+	position:absolute; z-index:1;
+	width:100%;
+	
+	overflow:hidden;
+}
+
+#scroller {
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+
+	float:left;
+	width:100%;
+	padding:0;
+
+/*	-webkit-box-shadow:0 0 8px #555;	/* Don't use box shadows, they slow down drastically CSS animations */
+}
+
+#scroller ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+#scroller li {
+	padding:0 10px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #fff;
+	background-color:#fafafa;
+	font-size:14px;
+}
+
+#scroller li > a {
+	display:block;
+}
+#myFrame {
+	position:absolute;
+	top:0; left:0;
+}
+</style>
+
+<style>
+
+
+table{
+width:100%;
+height:auto;
+float:left;
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+color:#000000;
+
+}
+tr{
+width:100%;
+height:40px;
+
+margin-top:5%;
+}
+
+.button1{
+height:30px;
+border-radius:5px;
+color:#ffffff;
+background: rgb(149,149,149); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(149,149,149,1) 0%, rgba(13,13,13,1) 46%, rgba(1,1,1,1) 50%, rgba(10,10,10,1) 53%, rgba(78,78,78,1) 76%, rgba(56,56,56,1) 87%, rgba(27,27,27,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(149,149,149,1)), color-stop(46%,rgba(13,13,13,1)), color-stop(50%,rgba(1,1,1,1)), color-stop(53%,rgba(10,10,10,1)), color-stop(76%,rgba(78,78,78,1)), color-stop(87%,rgba(56,56,56,1)), color-stop(100%,rgba(27,27,27,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 46%,rgba(1,1,1,1) 50%,rgba(10,10,10,1) 53%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 46%,rgba(1,1,1,1) 50%,rgba(10,10,10,1) 53%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 46%,rgba(1,1,1,1) 50%,rgba(10,10,10,1) 53%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 46%,rgba(1,1,1,1) 50%,rgba(10,10,10,1) 53%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=0 ); /* IE6-9 */
+}
+</style>
+
+</head>
+
+<body>
+<div id="header" >
+
+Wang
+
+</div>
+
+<div id="welcome"></div>
+<div id="wrapper">
+	<div id="scroller">
+			<div id="container" style=" padding-bottom:20px;">
+			
+				<div style="width:90%; height:auto;float:left; margin-left:5%; margin-top:5%;">
+				
+					<input type="button" name="button" id="btn" onclick="return confirm1();" value="Check Out" class="button1" style="float:right;"/>
+				</div>
+
+
+<table style="margin-top:7%; text-align:center;">
+	
+		<th>Item Name</th>
+		<th>Topping</th>
+		<th>Item Topping Price</th>
+		<th>Item Price</th>
+		<th>Total  Price</th>
+		<th>Action</th>
+
+	
+	
+	<tbody id="item" style="font-size:14px; font-family:Arial, Helvetica, sans-serif;">
+	</tbody>
+	
+</table>
+</div>
+<div style="width:100%; float:left; text-align:center; margin-top:8%;">
+									
+		
+			</div>
+</div>
+</div>
+
+<div id="footer">
+
+					<div style="width:49%;  padding-top:6%; padding-left:1%; float:left; font-weight:bold; font-family:Arial, Helvetica, sans-serif; font-size:16px; ">
+						Version 3.1
+					</div>	
+					<div style="width:49%; height:auto; padding-top:6%; float:left; padding-right:1%; text-align:right;">
+						<img src="images/linkedin.png" />
+						<img src="images/twitter.png" />
+						<img src="images/facebook.png" />
+					</div>
+						
+
+			</div>
+
+</body>
+</html>
